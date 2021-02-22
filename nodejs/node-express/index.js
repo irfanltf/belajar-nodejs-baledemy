@@ -1,36 +1,25 @@
 const express = require('express');
-
-
-
+const userrouter = require('./router/user') 
 const app = express();
 
+app.use(express.json()) // for parsing application/json
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 app.get('/', function(request, response){
-	response.send('HOme');
+		const kelas = {
+		id:1,
+		nama: 'Check'
+	}
+	response.json(kelas);
 });
 
 app.get('/about', function(request, response){
-	response.send('About')
-});
-
-app.get('/user', function(request, response){
-	response.send('Get user')
+	response.redirect('/user')
 });
 
 
-app.post('/user', function(request, response){
-	response.send('Post User');
-})
 
-app.put('/user/:id', function(request, response){
-	const id = request.params;
-	response.send(id);
-})
-
-app.delete('/user/:id', function(request, response){
-	response.send(request.params);
-})
-
+app.use(userrouter)
 
 app.listen(3000, function(){
 	console.log('Okey');
